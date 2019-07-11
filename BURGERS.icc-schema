@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<schemaFactory revisionNumber="1">
+    <schemaDefinition name="BURGERS" description="" group="BOOTCAMP" loadOnStartup="false">
+        <activateIncrementalLoad>false</activateIncrementalLoad>
+        <useUnknownMembersInFacts>false</useUnknownMembersInFacts>
+        <autoCleanUpTableColumns>false</autoCleanUpTableColumns>
+        <useFactPartitioning>false</useFactPartitioning>
+        <callGarbageCollector>NONE</callGarbageCollector>
+        <backup>NONE</backup>
+        <nonEmptyCachePolicy>NONE</nonEmptyCachePolicy>
+        <nonEmptyCacheType>REGULAR</nonEmptyCacheType>
+        <nonEmptyCachePersistency>MEMORY</nonEmptyCachePersistency>
+        <storagePolicy>DEFAULT</storagePolicy>
+        <hierarchyUniqueNameStyle>IncludeDimensionName</hierarchyUniqueNameStyle>
+        <fileDS directory="/home/niko/Downloads/data" checkColumnSize="false" name="BURGERS">
+            <fileDataTable fileEncoding="UTF-8" tableName="burger.csv" rowLimit="-1" id="c754bb8f-6eff-4af6-9566-fcd0c704eb39">
+                <column name="best_burger_place" tableType="STRING" type="STRING" selected="true" primaryKey="false" nullObjectAsString=""/>
+                <column name="gender" tableType="STRING" type="STRING" selected="true" primaryKey="false" nullObjectAsString=""/>
+                <addRowNumber>false</addRowNumber>
+                <stringDateConverter></stringDateConverter>
+                <trimStrings>true</trimStrings>
+                <columnSeparator>,</columnSeparator>
+                <commentMarker>#</commentMarker>
+                <removeQuotes>false</removeQuotes>
+            </fileDataTable>
+        </fileDS>
+        <multiLevelDimension dataTableId="c754bb8f-6eff-4af6-9566-fcd0c704eb39" isTimeDimension="false" isDefaultTimeDimension="false" isIndexingByRange="false" id="7e732984-84f7-4d0c-a14f-8a58581125b2" name="Best Burger Place">
+            <multiLevelHierarchy hasAllLevel="true" allLevelName="All-Level" allMemberName="All" name="Best Burger Place" isDefault="true">
+                <level name="Best Burger Place - L" nameUnique="false" nameUniqueInParent="false" keyUnique="false" ignoreNameCollision="false">
+                    <nameCol name="best_burger_place"/>
+                    <orderType>BY_NAME</orderType>
+                    <orderKind>ASC</orderKind>
+                </level>
+            </multiLevelHierarchy>
+        </multiLevelDimension>
+        <multiLevelDimension dataTableId="c754bb8f-6eff-4af6-9566-fcd0c704eb39" isTimeDimension="false" isDefaultTimeDimension="false" isIndexingByRange="false" id="fa1bb36e-c3a7-444f-ba13-eddfced4df20" name="Gender">
+            <multiLevelHierarchy hasAllLevel="true" allLevelName="All-Level" allMemberName="All" name="Gender" isDefault="true">
+                <level name="Gender - L" nameUnique="false" nameUniqueInParent="false" keyUnique="false" ignoreNameCollision="false">
+                    <nameCol name="gender"/>
+                    <orderType>BY_NAME</orderType>
+                    <orderKind>ASC</orderKind>
+                </level>
+            </multiLevelHierarchy>
+        </multiLevelDimension>
+        <cube id="e111a5e7-6804-47d3-a261-94142e1df106" name="Cube">
+            <defaultFacts measureGroupName="Facts" partitioningType="NONE" newGeneration="true" dataTableId="c754bb8f-6eff-4af6-9566-fcd0c704eb39" aggregateDataSourceFacts="false" unresolvedRowsBehavior="ERROR">
+                <rowFactAggregationType>ADD_ROW</rowFactAggregationType>
+                <measure name="Best Burger Place" aggregationType="COUNT">
+                    <dataColumn name="best_burger_place"/>
+                </measure>
+                <links dimensionId="7e732984-84f7-4d0c-a14f-8a58581125b2">
+                    <viewLinks type="LAST_LEVEL">
+                        <fromColumns name="best_burger_place"/>
+                        <toColumns name="best_burger_place"/>
+                    </viewLinks>
+                </links>
+                <links dimensionId="fa1bb36e-c3a7-444f-ba13-eddfced4df20">
+                    <viewLinks type="LAST_LEVEL">
+                        <fromColumns name="gender"/>
+                        <toColumns name="gender"/>
+                    </viewLinks>
+                </links>
+            </defaultFacts>
+        </cube>
+    </schemaDefinition>
+</schemaFactory>
